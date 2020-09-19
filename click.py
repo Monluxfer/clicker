@@ -7,8 +7,11 @@ from pynput.keyboard import Listener, KeyCode
 
 delay = 0.001
 button = Button.left
-start_stop_key = KeyCode(char='s')
-exit_key = KeyCode(char='e')
+start_stop_key = KeyCode(char='1')
+exit_key = KeyCode(char='2')
+press_key = KeyCode(char='3')
+exit_press_key = KeyCode(char='4')
+mouse = Controller()
 
 class ClickMouse(threading.Thread):
     def __init__(self, delay, button):
@@ -44,6 +47,10 @@ def on_press(key):
             click_thread.stop_clicking()
         else:
             click_thread.start_clicking()
+    elif key == press_key:
+        mouse.press(Button.left)
+    elif key == exit_press_key:
+        mouse.release(Button.left)
     elif key == exit_key:
         click_thread.exit()
         listener.stop()
